@@ -118,3 +118,72 @@ function Header() {
 ```
 
 - Add the fontawesome CDN in `index.html`
+
+## Home Screen Product Listing
+- Move the `product.js` file from the resources into the `src` directory.
+- Move the `images` folder into the `public` directory.
+- Create a `screens` folder in the `src` directory.
+- Create `HomeScreen.js` and populate as below using `_rfce`...
+
+```
+import { Row, Col } from 'react-bootstrap' 
+import products from '../products
+import Product from '../components/Product'
+
+function HomeScreen(){
+  return (
+    <div>
+      <h1>Latest Products</h1>
+      <Row>
+        {products.map(product => (
+          <Col key={product._id} sm={12} md={6} lg={4} xl={3}>
+            <Product product={product} />
+          </Col>
+        ))}
+      </Row>
+    </div>
+  )
+}
+```
+
+- Go to `App.js`
+- `import HomeScreen from './screens/HomeScreen'
+- Add `<HomeScreen />` in the container and remove the welcome text.
+
+### Product Component
+- Create `Product.js` in the `components` directory
+- `_rfce` to populate and fill as below
+
+```
+import { Card } from 'react-bootstrap'
+
+function Product({ product }) {
+  return (
+    <Card className="my-3 p-3 rounded">
+      <a href={`/product/${product._id}`}>
+        <Card.Img src="{product.image}" />
+      </a>
+      
+      <Card.Body>
+        <a href={`/product/${product._id}`}>
+          <Card.Title as="div">
+            <strong>{product.name}</strong>
+          </Card.Title>
+        </a>
+        
+        <Card.Text as="div">
+          <div className="my-3">
+            {product.rating} from {product.numReviews} reviews
+          </div>
+        </Card.Text>
+        
+        <Card.Text as="h3">
+          ${product.price}
+        </Card.Text>
+      </Card.Body>
+    </Card>
+  )
+}
+```
+
+### Rating Component
