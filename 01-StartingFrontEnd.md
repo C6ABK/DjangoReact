@@ -95,7 +95,7 @@ main {
 - Open `Header.js` and modify as below.
 
 ```
-import { Navbbar, Nav, Container, Row } from 'react-bootstrap'
+import { Navbar, Nav, Container, Row } from 'react-bootstrap'
 
 function Header() {
   return (
