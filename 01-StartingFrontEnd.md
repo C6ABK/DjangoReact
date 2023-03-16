@@ -187,3 +187,98 @@ function Product({ product }) {
 ```
 
 ### Rating Component
+- Add the component to `Product.js` to replace the existing format.
+
+```
+import Rating from './Rating'
+
+...
+<Card.Text as="div">
+  <div className="my-3">
+   <Rating value={product.rating} text={`${product.numReviews} reviews`} color={'#f8e825'} />
+  </div>
+</Card.Text>
+...
+```
+
+- Create `Rating.js` in `components`
+- `_rfce` to populate and fill out as below.
+
+```
+function Rating({ value, text, color }) {
+  return (
+    <div className="rating">
+    
+      <span>
+        <i style={{ color }} className={
+          value >= 1
+            ? 'fas fa-star'
+            : value >= 0.5
+              ? 'fas fa-star-half-alt'
+              : 'far fa-star'
+        }>
+        </i>
+      </span>
+      
+       <span>
+        <i style={{ color }} className={
+          value >= 2
+            ? 'fas fa-star'
+            : value >= 1.5
+              ? 'fas fa-star-half-alt'
+              : 'far fa-star'
+        }>
+        </i>
+      </span>
+      
+      <span>
+        <i style={{ color }} className={
+          value >= 3
+            ? 'fas fa-star'
+            : value >= 2.5
+              ? 'fas fa-star-half-alt'
+              : 'far fa-star'
+        }>
+        </i>
+      </span>
+      
+      <span>
+        <i style={{ color }} className={
+          value >= 4
+            ? 'fas fa-star'
+            : value >= 3.5
+              ? 'fas fa-star-half-alt'
+              : 'far fa-star'
+        }>
+        </i>
+      </span>
+      
+      <span>
+        <i style={{ color }} className={
+          value >= 5
+            ? 'fas fa-star'
+            : value >= 4.5
+              ? 'fas fa-star-half-alt'
+              : 'far fa-star'
+        }>
+        </i>
+      </span>
+      
+      <span>{ text && text }</span>
+      
+    </div>
+  )
+}
+```
+
+- Go to `index.css`
+
+```
+.rating span {
+  margin: 0.1rem;
+}
+
+h3 {
+  padding: 1rem 0;
+}
+```
