@@ -323,3 +323,24 @@ function App() {
 </Link>
 ```
 - Do the same for the product title link.
+- Go to `Header.js`
+- `import { LinkContainer } from 'react-router-bootstrap'`
+- Wrap `<Nav.Brand>` or `<Nav.Link>` in the `<LinkContainer>` tags and remove the hrefs for each. Each link should look like this...
+
+```
+...
+<Container>
+  <LinkContainer to='/'>
+    <Navbar.Brand>ProShop</Navbar.Brand>
+  </LinkContainer>
+...
+
+...
+  <LinkContainer to='/cart'>
+    <Nav.Link><i className="fas fa-shopping-cart"></i>Cart</Nav.Link>
+  </LinkContainer>
+  <LinkContainer to='/login'>
+    <Nav.Link><i className="fas fa-user"></i>Login</Nav.Link>
+  </LinkContainer>
+...
+```
