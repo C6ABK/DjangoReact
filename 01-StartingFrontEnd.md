@@ -284,3 +284,42 @@ h3 {
 ```
 
 ## React Router
+- Make sure you're in the `frontend` directory.
+- `npm install react-router-dom react-router-bootstrap`
+- Add `ProductScreen.js` to screens and fill with `_rfce`
+- Go to `App.js` and modify as below
+
+```
+...
+import { BrowserRouter as Router, Route } from 'react-router-dom'
+import ProductScreen from './screens/ProductScreen'
+...
+
+...
+function App() {
+  return (
+    <Router>
+      <Header />
+      <main className="py-3">
+        <Container>
+          <Route path='/' component={HomeScreen} exact />
+          <Route path='/product/:id' component={ProductScreen}  />
+        </Container>
+      </main>
+      <Footer />
+    </Router>
+  )
+}
+...
+
+```
+
+- Go to the `Product.js` component 
+- Import the Link component `import { Link } from 'react-router-dom'`
+- Change the anchor tags to `Link` tags (href becomes 'to').
+```
+<Link to={'product/${product._id}>
+  <Card.Img src={product.image} />
+</Link>
+```
+- Do the same for the product title link.
