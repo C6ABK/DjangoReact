@@ -318,7 +318,7 @@ function App() {
 - Import the Link component `import { Link } from 'react-router-dom'`
 - Change the anchor tags to `Link` tags (href becomes 'to').
 ```
-<Link to={'product/${product._id}>
+<Link to={`product/${product._id}`>
   <Card.Img src={product.image} />
 </Link>
 ```
