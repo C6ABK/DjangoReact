@@ -291,7 +291,7 @@ h3 {
 
 ```
 ...
-import { BrowserRouter as Router, Route } from 'react-router-dom'
+import { BrowserRouter as Router, Route, Routes } from 'react-router-dom'
 import ProductScreen from './screens/ProductScreen'
 ...
 
@@ -299,14 +299,16 @@ import ProductScreen from './screens/ProductScreen'
 function App() {
   return (
     <Router>
-      <Header />
-      <main className="py-3">
-        <Container>
-          <Route path='/' component={HomeScreen} exact />
-          <Route path='/product/:id' component={ProductScreen}  />
-        </Container>
-      </main>
-      <Footer />
+    <Header />
+    <main className="py-3">
+      <Container>
+        <Routes>
+          <Route path="/" element={<HomeScreen />} exact />
+          <Route path="/product/:id" element={<ProductScreen />} />
+        </Routes>
+      </Container>
+    </main>
+    <Footer />
     </Router>
   )
 }
