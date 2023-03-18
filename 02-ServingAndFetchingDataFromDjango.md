@@ -118,5 +118,28 @@ def getRoutes(request):
   ]
   return Response(routes)
   
+@api_view(["GET"]) 
+def getProducts(request):
+  return Response(products)
+
 ...
 ```
+
+- Also in `base/views.py`, add the single product view...
+
+```
+...
+
+@api_view(["GET"])
+def getProduct(request, pk):
+  product = None
+  
+  for i in products:
+    if i["_id"] == pk:
+      product = i
+      break
+  
+  return Response(product)
+```
+
+- Add the url in `base/urls.py` - `path("products/<str:pk>/, views.getProduct, name="product"),
