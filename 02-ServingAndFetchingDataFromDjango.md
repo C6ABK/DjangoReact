@@ -92,3 +92,31 @@ def getProducts(request):
 - Go to `base/urls.py` and add a new path `path("products/", views.getProducts, name="products"),`
 
 ## Django REST Framework
+- `pip install djangorestframework`
+- Import into `INSTALLED_APPS` in `backend/settings.py`
+
+```
+INSTALLED_APPS = [
+  ...
+  'base.apps.BaseConfig',
+  'rest_framework',
+]
+```
+
+- Go to `base/views.py` and modify as below...
+
+```
+...
+import rest_framework.decorators import api_view
+import rest_framework.response import Response
+...
+
+@api_view(["GET"])
+def getRoutes(request):
+  routes = [
+     ...
+  ]
+  return Response(routes)
+  
+...
+```
