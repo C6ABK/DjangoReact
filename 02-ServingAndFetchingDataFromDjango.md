@@ -67,7 +67,7 @@ urlpatterns = [
 ]
 ```
 
-- Copy `products.js` from the `frontend`, create `products.py` in base and past in.
+- Copy `products.js` from the `frontend`, create `products.py` in base and paste in.
 - Get rid of `const` and `export` to create a python dictionary.
 
 ```
