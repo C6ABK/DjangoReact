@@ -3,7 +3,7 @@
 ### Virtual Environment
 - Go to the `ecommerce` root directory.
 - `pip install virtualenv`
-- `virtualenv myenv`
+- `virtualenv myenv` or `python -m venv myenv`
 - Activate the virtual environment `myenv\scripts\activate` - might be different with ubuntu, check the `activate` file for further instructions.
 - `pip list` to view dependencies.
 - `pip install django`
