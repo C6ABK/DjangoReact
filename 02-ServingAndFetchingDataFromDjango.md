@@ -220,3 +220,9 @@ function ProductScreen({ match }) {
   }
 }
 ```
+
+## Database Setup & Admin Panel
+- `python manage.py migrate`
+- `python manage.py createsuperuser`
+- Start server and go to `https://domain.com/admin` to access admin panel.
+
