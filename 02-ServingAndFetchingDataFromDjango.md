@@ -143,3 +143,57 @@ def getProduct(request, pk):
 ```
 
 - Add the url in `base/urls.py` - `path("products/<str:pk>/, views.getProduct, name="product")`
+
+## Fetching Data
+### HomeScreen.js
+- Run the django server and open another terminal
+- In the `frontend` directory, `npm install axios`
+- `npm start`
+- Go to `frontend/src/screens/HomeScreen.js` and modify as below (remove the import of the static products file).
+
+```
+...
+import { useState, useEffect } from "react"
+import axios from "axios"
+
+function HomeScreen() {
+ const [products, setProducts = useState([])
+ 
+ useEffect(() => {
+   async function fetchProducts() {
+     const { data } = await axios.get("domain.com/api/products/")
+     setProducts(data)
+   }
+   
+   fetchProducts()
+ }, [])
+ 
+ ...
+}
+
+```
+
+- `pip install django-cors-headers`
+- Go to `backend/settings.py` and add to `INSTALLED_APPS`
+
+```
+INSTALLED_APPS = [
+  ...
+  'rest_framework',
+  'corsheaders',
+]
+```
+
+- Place the corsheaders middleware at the top of the `MIDDLEWARE` group as below
+
+```
+MIDDLEWARE = [
+  'corsheaders.middleware.CorsMiddleware',
+  'django.middleware.security.SecurityMiddleware',
+  ...
+]
+```
+
+- Add `CORS_ALLOW_ALL_ORIGINS = True` at the bottom of `settings.py`
+
+### Proxy URL
