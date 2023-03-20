@@ -226,3 +226,13 @@ function ProductScreen({ match }) {
 - `python manage.py createsuperuser`
 - Start server and go to `https://domain.com/admin` to access admin panel.
 
+## Models
+- Go to `base/models.py` and import the user model - `from django.contrib.auth.models import User`
+- Add the product model below to `models.py`
+
+### Product Model
+```
+class Product(models.Model):
+  user = models.ForeignKey(User, on_delete=models.SETNULL, null=True)
+  
+```
