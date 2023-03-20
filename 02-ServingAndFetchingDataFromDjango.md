@@ -161,7 +161,7 @@ function HomeScreen() {
  
  useEffect(() => {
    async function fetchProducts() {
-     const { data } = await axios.get("domain.com/api/products/")
+     const { data } = await axios.get("/api/products/")
      setProducts(data)
    }
    
@@ -197,3 +197,26 @@ MIDDLEWARE = [
 - Add `CORS_ALLOW_ALL_ORIGINS = True` at the bottom of `settings.py`
 
 ### Proxy URL
+- Go to `package.json` and add `"proxy": "http://yourdomain.com"` below `"name"` - `0.0.0.0:8000`?
+
+### ProductScreen.js
+- Modify the products page as below
+
+```
+...
+import { useState, useEffect } from "react"
+import axios from "axios"
+
+function ProductScreen({ match }) {
+  const [product, setProduct] = useState([])
+  
+  useEffect(() => {
+    async function fetchProduct() {
+      const { data } = await axios.get(`/api/products/${match.params.id}`)
+      setProduct(data)
+    }
+    
+    fetchProduct()
+  }
+}
+```
