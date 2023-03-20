@@ -157,7 +157,7 @@ import { useState, useEffect } from "react"
 import axios from "axios"
 
 function HomeScreen() {
- const [products, setProducts = useState([])
+ const [products, setProducts] = useState([])
  
  useEffect(() => {
    async function fetchProducts() {
