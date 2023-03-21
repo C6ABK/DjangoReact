@@ -332,3 +332,20 @@ class ShippingAddress(models.Model):
   def __str__(self):
     return str(self.address)
 ```
+
+- Go to `base/admin.py` and register the models
+
+```
+from django.contrib import admin
+from .models import *
+
+admin.site.register(Product)
+admin.site.register(Review)
+admin.site.register(Order)
+admin.site.register(OrderItem)
+admin.site.register(ShippingAddress)
+```
+
+- `python manage.py makemigrations`
+- `python manage.py migrate`
+- Check admin panel to test all tables are displayed correctly.
