@@ -233,7 +233,7 @@ function ProductScreen({ match }) {
 ### Product Model
 ```
 class Product(models.Model):
-  user = models.ForeignKey(User, on_delete=models.SETNULL, null=True)
+  user = models.ForeignKey(User, on_delete=models.SET_NULL, null=True)
   name = models.CharField(max_length=200, null=True, blank=True)
   brand = models.CharField(max_length=200, null=True, blank=True)
   category = models.CharField(max_length=200, null=True, blank=True)
@@ -265,7 +265,7 @@ admin.site.register(Product)
 
 ```
 class Review(models.Model):
-  product = models.ForeignKey(Product, on_delete=models.SETNULL, null=True)
+  product = models.ForeignKey(Product, on_delete=models.SET_NULL, null=True)
   user =  models.ForeignKey(User, on_delete=models.SETNULL, null=True)
   name = models.CharField(max_length=200, null=True, blank=True)
   rating = models.IntegerField(null=True, blank=True, default=0)
@@ -282,7 +282,7 @@ class Review(models.Model):
 
 ```
 class Order(models.Model):
-  user = models.ForeignKey(User, on_delete=models.SETNULL, null=True)
+  user = models.ForeignKey(User, on_delete=models.SET_NULL, null=True)
   paymentMethod = models.CharField(max_length=200, null=True, blank=True)
   taxPrice = models.DecimalField(max_digits=7, decimal_places=2, null=True, blank=True)
   shippingPrice = models.DecimalField(max_digits=7, decimal_places=2, null=True, blank=True)
@@ -304,7 +304,7 @@ class Order(models.Model):
 
 ```
 class OrderItem(models.Model):
-  product = models.ForeignKey(Product, on_delete=models.SETNULL, null=True)
+  product = models.ForeignKey(Product, on_delete=models.SET_NULL, null=True)
   order = models.ForeignKey(Order, on_delete=models.SETNULL, null=True)
   name = models.CharField(max_length=200, null=True, blank=True)
   qty = models.IntegerField(null=True, blank=True, default=0)
