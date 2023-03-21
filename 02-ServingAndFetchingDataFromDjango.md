@@ -196,7 +196,7 @@ MIDDLEWARE = [
 
 - Add `CORS_ALLOW_ALL_ORIGINS = True` at the bottom of `settings.py`
 
-### Proxy URL
+### Proxy URL - (unreliable on cloud IDE?)
 - Go to `package.json` and add `"proxy": "http://yourdomain.com"` below `"name"` - `0.0.0.0:8000`?
 
 ### ProductScreen.js
