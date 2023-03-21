@@ -350,3 +350,18 @@ admin.site.register(ShippingAddress)
 - `python manage.py makemigrations`
 - `python manage.py migrate`
 - Check admin panel to test all tables are displayed correctly.
+
+## Product Image Field
+- Go to `base/models.py` again and add the image field
+
+```
+class Product(models.Model):
+  ...
+  image = models.ImageField(null=True, blank=True)
+  ...
+```
+
+- `pip install pillow`
+- `python manage.py makemigrations`
+- `python manage.py migrate`
+- This will save images in the `backend` directory - this is fixed in the next section.
