@@ -225,6 +225,7 @@ function ProductScreen({ match }) {
 - `python manage.py migrate`
 - `python manage.py createsuperuser`
 - Start server and go to `https://domain.com/admin` to access admin panel.
+- Use `CSRF_TRUSTED_ORIGINS=['https://*.yourdomain.com/']` is you get CSRF error while in development.
 
 ## Models
 - Go to `base/models.py` and import the user model - `from django.contrib.auth.models import User`
