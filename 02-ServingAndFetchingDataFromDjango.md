@@ -365,3 +365,30 @@ class Product(models.Model):
 - `python manage.py makemigrations`
 - `python manage.py migrate`
 - This will save images in the `backend` directory - this is fixed in the next section.
+
+## Static Files
+- Create a folder `static` in the root of the `backend`
+- Go to `backend/backend/settings.py` and go to the bottom where `STATIC_URL...` should already exist.
+- Add the following options to `settings.py`
+
+```
+...
+STATIC_URL = '/static/'
+MEDIA_URL = '/images/'
+
+STATICFILES_DIRS = [
+  BASE_DIR / 'static'
+]
+
+MEDIA_ROOT = 'static/images'
+...
+```
+
+- Go to `backend/backend/urls.py` and add `from django.conf.urls.static import static`
+- Add the following below the existing `urlpatterns` section...
+
+```
+urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
+```
+
+## Serializing Data
