@@ -442,3 +442,4 @@ def getProduct(request, pk):
   serializer = ProductSerializer(product, many=False)
   return Response(serializer.data)
 ```
+- Go through the `products.py` and add them to the backend via the admin panel.
