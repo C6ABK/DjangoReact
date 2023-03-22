@@ -415,7 +415,7 @@ class ProductSerializer(serializers.ModelSerializer):
     fields = '__all__'
 ```
 
-- Note: you can return specific fields using the format below...
+- <b>Note:</b> you can return specific fields using the format below...
 ```
 class ProductSerializer(serializers.ModelSerializer):
   class Meta:
