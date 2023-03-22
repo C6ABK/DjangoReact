@@ -401,3 +401,36 @@ def getProducts(request):
   products = Product.objects.all()
   return Response(products)
 ```
+
+- Create `serializers.py` in `base` and fill as below...
+
+```
+from rest_framework import serializers
+from django.contrib.auth.models import User
+from .models import Product
+
+class ProductSerializer(serializers.ModelSerializer):
+  class Meta:
+    model = Product
+    fields = '__all__'
+```
+
+- Note: you can return specific fields using the format below...
+```
+class ProductSerializer(serializers.ModelSerializer):
+  class Meta:
+    model = Product
+    fields = ['name', 'price']
+```
+
+- Go back to `base/views.py` and `from .serializers import ProductSerializer`
+- Modify `def getProducts` as below...
+
+```
+@api_view(['GET'])
+def getProducts(request):
+  products = Product.objects.all()
+  serializer = ProductSerializer(products, many=True)
+  return Response(serializer.data)
+
+```
