@@ -43,13 +43,13 @@ ReactDOM.render(
 ```
 export const producListReducer = (state = { products:[] }, action) => {
     switch(action.type){
-        case 'PRODUCT_LIST_REQUEST':
+        case PRODUCT_LIST_REQUEST:
             return {loading: true, products:[] }
             
-        case 'PRODUCT_LIST_SUCCESS':
+        case PRODUCT_LIST_SUCCESS:
             return {loading: false, products: action.payload }
             
-        case 'PRODUCT_LIST_FAIL':
+        case PRODUCT_LIST_FAIL:
             return {loading: false, error: action.payload }
             
         default:
@@ -70,3 +70,56 @@ const reducer = combineReducers({
 ```
 
 - Check redux devtools again and you should be able to see the empty products array.
+
+### Constants
+- Create `constants` folder in `src`
+- Create `productConstants.js` in `src/constants`, fill as below
+
+```
+export const PRODUCT_LIST_REQUEST = 'PRODUCT_LIST_REQUEST'
+export const PRODUCT_LIST_SUCCESS= 'PRODUCT_LIST_SUCCESS'
+export const PRODUCT_LIST_FAIL = 'PRODUCT_LIST_FAIL'
+```
+
+- Import into `productReducers.js` as below...
+
+```
+import axios from 'axios'
+import {
+    PRODUCT_LIST_REQUEST,
+    PRODUCT_LIST_SUCCESS,
+    PRODUCT_LIST_FAIL
+} from '../constants/productConstants'
+```
+
+### Actions
+- Create `actions` folder in `src`
+- Create `productActions.js` and fill as below
+- <b>NOTE</b> - USE FULL PATH BELOW FOR CODEANYWHERE WHEN MAKING API CALL 
+
+```
+import {
+    PRODUCT_LIST_REQUEST,
+    PRODUCT_LIST_SUCCESS,
+    PRODUCT_LIST_FAIL
+} from '../constants/productConstants'
+
+const listProduct = () => async (dispatch) => {
+    try{
+        dispatch({ type: PRODUCT_LIST_REQUEST })
+        
+        const { data } = await axios.get('/api/products/')
+        
+        dispatch({
+            type: PRODUCT_LIST_SUCCESS,
+            payload: data
+        }
+    } catch(error){
+        dispatch({ 
+            type: PRODUCT_LIST_FAIL,
+            payload: error.response && error.response.data.message 
+                ? error.response.data.message 
+                : error.message
+        })
+    }
+```
