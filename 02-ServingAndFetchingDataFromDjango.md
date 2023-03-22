@@ -385,9 +385,11 @@ MEDIA_ROOT = 'static/images'
 ```
 
 - Go to `backend/backend/urls.py` and add `from django.conf.urls.static import static`
-- Add the following below the existing `urlpatterns` section...
+- Add the following below the existing `urlpatterns` section and add the import...
 
 ```
+from django.conf import settings
+...
 urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
 ```
 
