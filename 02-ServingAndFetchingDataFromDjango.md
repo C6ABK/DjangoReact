@@ -392,3 +392,12 @@ urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
 ```
 
 ## Serializing Data
+- Go to `base/views.py` and add `from .models import Product`
+- Modify `def getProducts` as below
+
+```
+@api_view(['GET'])
+def getProducts(request):
+  products = Product.objects.all()
+  return Response(products)
+```
