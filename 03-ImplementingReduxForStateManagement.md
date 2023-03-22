@@ -35,3 +35,38 @@ ReactDOM.render(
 ...
 ```
 - Inspect > security > redux and you should be able to see the store.
+
+## Product List Reducer & Action
+- Create the `reducers` folder in `src`
+- Create `productReducers.js` in the `reducers` directory and fill as below...
+
+```
+export const producListReducer = (state = { products:[] }, action) => {
+    switch(action.type){
+        case 'PRODUCT_LIST_REQUEST':
+            return {loading: true, products:[] }
+            
+        case 'PRODUCT_LIST_SUCCESS':
+            return {loading: false, products: action.payload }
+            
+        case 'PRODUCT_LIST_FAIL':
+            return {loading: false, error: action.payload }
+            
+        default:
+            return state
+    }
+}
+```
+
+- Go back to `store.js` and add as below...
+
+```
+...
+import { productListReducer } from './reducers/productReducers'
+
+const reducer = combineReducers({
+    productList: productListReducer,
+})
+```
+
+- Check redux devtools again and you should be able to see the empty products array.
