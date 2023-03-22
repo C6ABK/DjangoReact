@@ -104,7 +104,7 @@ import {
     PRODUCT_LIST_FAIL
 } from '../constants/productConstants'
 
-const listProduct = () => async (dispatch) => {
+export const listProduct = () => async (dispatch) => {
     try{
         dispatch({ type: PRODUCT_LIST_REQUEST })
         
@@ -122,4 +122,26 @@ const listProduct = () => async (dispatch) => {
                 : error.message
         })
     }
+```
+
+## Bringing Redux into Home Screen
+- Open `HomeScreen.js` and delete the axios import, products state and everything inside useEffect
+- Modify as below...
+
+```
+...
+import  { useDispatch, useSelector } from 'react-redux'
+import { listProducts } from '../actions/productActions'
+...
+
+function HomeScreen() {
+    const dispatch = useDispatch()
+    const productList = useSelector(state => state.productList)
+    const { error, loading, products } = productList
+    
+    useEffect(() => {
+        dispatch(listProducts())
+    }, [])
+}
+
 ```
