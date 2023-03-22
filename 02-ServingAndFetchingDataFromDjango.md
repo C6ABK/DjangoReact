@@ -432,5 +432,13 @@ def getProducts(request):
   products = Product.objects.all()
   serializer = ProductSerializer(products, many=True)
   return Response(serializer.data)
+```
 
+- Modify the individual `def getProduct` as below. Because we're only returning the specific product with `/api/products/1`, many is set to False.
+```
+@api_view(['GET'])
+def getProduct(request, pk):
+  product = Product.objects.get(_id=pk)
+  serializer = ProductSerializer(product, many=False)
+  return Response(serializer.data)
 ```
