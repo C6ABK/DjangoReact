@@ -204,7 +204,7 @@ MIDDLEWARE = [
 <Card.Img src={`https://port-8000-python-purple-bird-adamcbark988523.codeanyapp.com${product.image}`} />
 ```
 #### setupProxy.js - works for everything but the image on cloud IDE
-https://stackoverflow.com/questions/70374005/invalid-options-object-dev-server-has-been-initialized-using-an-options-object
+`https://stackoverflow.com/questions/70374005/invalid-options-object-dev-server-has-been-initialized-using-an-options-object`
 
 ### ProductScreen.js
 - Modify the products page as below
