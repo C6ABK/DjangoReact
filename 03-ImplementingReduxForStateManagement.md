@@ -271,3 +271,57 @@ export const productDetailsReducer = (state = { product: {reviews:[]} }, action)
 }
 
 ```
+
+- Open `store.js` and modify as below...
+
+```
+...
+import { productListReducer, productDetailReducer } from './reducers/productReducers'
+
+const reducer = combineReducers({
+    productList: productListReducer,
+    productDetails: productDetailsReducer,
+})
+...
+
+```
+
+- Open `productActions.js` and modify as below...
+
+```
+...
+import {
+    PRODUCT_LIST_REQUEST,
+    PRODUCT_LIST_SUCCESS,
+    PRODUCT_LIST_FAIL,
+    
+    PRODUCT_DETAILS_REQUEST,
+    PRODUCT_DETAILS_SUCCESS,
+    PRODUCT_DETAILS_FAIL,
+} from '../constant/productConstants'
+
+export const ListProducts = () => async (dispatch) => {
+    ...
+}
+
+export const ListProductDetails = (id) => async (dispatch) => {
+    try {
+        dispatch({ type: PRODUCT_DETAILS_REQUEST })
+        
+        const { data } = await axios.get(`/api/products/${id}`)
+        
+        dispatch({
+            type: PRODUCT_DETAILS_SUCCESS,
+            payloadL data
+        })
+    } catch (error) {
+        dispatch({
+            type: PRODUCT_DETAILS_FAIL,
+            payload: error.response && error.response.data.message 
+                ? error.response.data.message 
+                : error.message
+        })
+    }
+}
+
+```
