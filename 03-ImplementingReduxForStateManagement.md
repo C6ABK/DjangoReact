@@ -95,7 +95,6 @@ import {
 ### Actions
 - Create `actions` folder in `src`
 - Create `productActions.js` and fill as below
-- <b>NOTE</b> - USE FULL PATH BELOW FOR CODEANYWHERE WHEN MAKING API CALL 
 
 ```
 import {
