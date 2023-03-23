@@ -325,3 +325,43 @@ export const ListProductDetails = (id) => async (dispatch) => {
 }
 
 ```
+
+- Go to `ProductScreen.js`
+- Get rid of the `axios` import and `product` state and modify as below...
+- REPLACE MATCH WITH PRODUCT_ID
+
+```
+...
+import { useDispatch, useSelector } from 'react-redux'
+import { listProductDetails } from '../actions/productActions'
+import Loader from '../components/Loader'
+import Message from '../components/Message
+
+function ProductScreen({ match }) {
+    const dispatch = useDispatch()
+    const productDetails = useSelector(state => state.productDetails)
+    const { loading, error, product } = productDetails
+    
+    useEffect(() => {
+        dispatch(listProductDetails(match.params.id)
+    }, [])
+}
+
+return (
+    <div>
+        <Link to='/' className='btn btn-light my-3'>Go Back</Link>
+        
+        {loading ?
+            <Loader />
+            : error
+                ? <Message variant='danger'>{error}</Message>
+            : (
+                <Row>
+                    ...
+                </Row>
+            )
+        }
+    </div>
+)
+
+```
