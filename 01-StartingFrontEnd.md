@@ -147,7 +147,7 @@ function HomeScreen(){
 ```
 
 - Go to `App.js`
-- `import HomeScreen from './screens/HomeScreen'
+- `import HomeScreen from './screens/HomeScreen' `
 - Add `<HomeScreen />` in the container and remove the welcome text.
 
 ### Product Component
