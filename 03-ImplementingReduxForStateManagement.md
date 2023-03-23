@@ -192,7 +192,7 @@ function Loader() {
 
 ```
 
-- Go to `HomeScreen.js` and import the loader - `import Loader from '../components/Loader'
+- Go to `HomeScreen.js` and import the loader - `import Loader from '../components/Loader' `
 - Replace the original loading message with the `Loader` component...
 
 ```
