@@ -1,6 +1,6 @@
 # Implementing Redux for State Management
 ## Create Redux Store
-- `npm install redux react-redux redux-thunk redux-devtools-extensions`
+- `npm install redux react-redux redux-thunk redux-devtools-extension`
 - Go to `frontend/src` and create `store.js` and add the code below...
 
 ```
