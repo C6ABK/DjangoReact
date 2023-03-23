@@ -47,7 +47,7 @@ function App(){
 - `npm install react-bootstrap`
 - Open `App.js` 
 - `imd` for destructured import shortcut
-- `import { Container } from 'react-bootstrap'
+- `import { Container } from 'react-bootstrap'`
 - Put a `Container` in the `main` section and add class to `main`
 
 ```
