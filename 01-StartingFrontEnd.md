@@ -43,7 +43,7 @@ function App(){
 ### React Bootstrap
 - Tutorial is using the Lux theme from bootswatch.com.
 - Get the `bootstrap.min.css` file from resources and put in `src` directory.
-- Go to index.js and `import './bootstrap.min.css`
+- Go to index.js and `import './bootstrap.min.css'`
 - `npm install react-bootstrap`
 - Open `App.js` 
 - `imd` for destructured import shortcut
