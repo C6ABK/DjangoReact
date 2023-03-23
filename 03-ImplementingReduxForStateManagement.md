@@ -228,3 +228,5 @@ function Message({variant, children}) {
     : error  ? <Message variant='danger'>{error}</Message>
 ...
 ```
+
+## Product Details Reducer & Action
