@@ -230,3 +230,42 @@ function Message({variant, children}) {
 ```
 
 ## Product Details Reducer & Action
+- In the `constants` directory, add the following below your existing constants...
+
+```
+...
+export const PRODUCT_DETAILS_REQUEST = 'PRODUCT_DETAILS_REQUEST'
+export const PRODUCT_DETAILS_SUCCESS = 'PRODUCT_DETAILS_SUCCESS'
+export const PRODUCT_DETAILS_FAIL = 'PRODUCT_DETAILS_FAIL'
+```
+
+- Go to `productReducers.js` and import the new constants...
+
+```
+import {
+    ...
+    PRODUCT_DETAILS_REQUEST,
+    PRODUCT_DETAILS_SUCCESS,
+    PRODUCT_DETAILS_FAIL,
+} from '../constants/productConstants'
+```
+
+- Create a new reducer for product details as below...
+
+```
+export const productDetailsReducer = (state = { product: {reviews:[]} }, action) => {
+    switch (action.type) {
+        case PRODUCT_DETAILS_REQUEST:
+            return { loading: true, ...state }
+        
+        case PRODUCT_DETAILS_SUCCESS:
+            return { loading: false, product: action.payload }
+            
+        case PRODUCT_DETAILS_FAIL:
+            return { loading: false, error: action.payload }
+            
+        default:
+            return state
+    }
+}
+```
