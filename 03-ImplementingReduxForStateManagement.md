@@ -165,3 +165,27 @@ function HomeScreen() {
 ```
 
 ## Message & Loader Component
+- Go to `components` and create `Loader.js` and `Message.js`
+- `_rfce` in `Loader.js` and fill as below
+
+```
+import { Spinner } from 'react-bootstrap'
+
+function Loader() {
+    return (
+        <Spinner
+            animation='border'
+            role='status'
+            style={{
+                height: '100px',
+                width: '100px',
+                margin: 'auto',
+                display: 'block'
+            }}
+        >
+            <span className='sr-only'>Loading...</span>
+        </Spinner>
+    )
+}
+
+```
