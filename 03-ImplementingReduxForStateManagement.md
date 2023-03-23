@@ -237,6 +237,7 @@ function Message({variant, children}) {
 export const PRODUCT_DETAILS_REQUEST = 'PRODUCT_DETAILS_REQUEST'
 export const PRODUCT_DETAILS_SUCCESS = 'PRODUCT_DETAILS_SUCCESS'
 export const PRODUCT_DETAILS_FAIL = 'PRODUCT_DETAILS_FAIL'
+
 ```
 
 - Go to `productReducers.js` and import the new constants...
@@ -268,4 +269,5 @@ export const productDetailsReducer = (state = { product: {reviews:[]} }, action)
             return state
     }
 }
+
 ```
