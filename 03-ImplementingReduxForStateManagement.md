@@ -166,6 +166,8 @@ function HomeScreen() {
 
 ## Message & Loader Component
 - Go to `components` and create `Loader.js` and `Message.js`
+
+### Loader.js
 - `_rfce` in `Loader.js` and fill as below
 
 ```
@@ -188,4 +190,41 @@ function Loader() {
     )
 }
 
+```
+
+- Go to `HomeScreen.js` and import the loader - `import Loader from '../components/Loader'
+- Replace the original loading message with the `Loader` component...
+
+```
+...
+<h1>Latest Products</h1>
+{loading ? <Loader />
+    : error  ? <h3>{error}</h3>
+...
+```
+
+### Message.js
+- `_rfce` to populate and modify as below...
+
+```
+import { Alert } from 'react-bootstrap'
+
+function Message({variant, children}) {
+    return (
+        <Alert variant={variant}>
+            {children}
+        </Alert>
+    )
+}
+```
+
+- Go back to `HomeScreen.js` and import the message component - `import Message from '../components/Message`
+- Wrap the `{error}` in the new `Message` component as below...
+
+```
+...
+<h1>Latest Products</h1>
+{loading ? <Loader />
+    : error  ? <Message>{error}</Message>
+...
 ```
