@@ -197,7 +197,12 @@ MIDDLEWARE = [
 - Add `CORS_ALLOW_ALL_ORIGINS = True` at the bottom of `settings.py`
 
 ### Proxy URL - (unreliable on cloud IDE?)
-- Go to `package.json` and add `"proxy": "http://yourdomain.com"` below `"name"` - `0.0.0.0:8000`?
+- Go to `package.json` and add `"proxy": "http://localhost:8000"` below `"name"`
+- This works fine on desktop but not on codeanywhere - unable to find elegant solution in good time so just edit the image source in `Product.js` as below in this case...
+
+```
+<Card.Img src={`https://port-8000-python-purple-bird-adamcbark988523.codeanyapp.com${product.image}`} />
+```
 
 ### ProductScreen.js
 - Modify the products page as below
