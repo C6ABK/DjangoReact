@@ -163,3 +163,5 @@ function HomeScreen() {
     </Row>
 }
 ```
+
+## Message & Loader Component
