@@ -41,7 +41,7 @@ ReactDOM.render(
 - Create `productReducers.js` in the `reducers` directory and fill as below...
 
 ```
-export const producListReducer = (state = { products:[] }, action) => {
+export const productListReducer = (state = { products:[] }, action) => {
     switch(action.type){
         case PRODUCT_LIST_REQUEST:
             return {loading: true, products:[] }
