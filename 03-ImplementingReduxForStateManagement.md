@@ -312,7 +312,7 @@ export const listProductDetails = (id) => async (dispatch) => {
         
         dispatch({
             type: PRODUCT_DETAILS_SUCCESS,
-            payloadL data
+            payload: data
         })
     } catch (error) {
         dispatch({
