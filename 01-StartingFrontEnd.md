@@ -67,7 +67,7 @@ function App(){
 ```
 #### Footer.js
 - Open `Footer.js`
-- `imd` -> `import { Container, Row, Col } from 'react-bootstrap'
+- `imd` -> `import { Container, Row, Col } from 'react-bootstrap'`
 - Populate `Footer` as below
 
 ```
