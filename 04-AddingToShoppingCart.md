@@ -75,3 +75,6 @@ const addToCartHandler = () => {
 ```
 
 - Add `CartScreen.js` in the `screens` directory and fill with `rfce`
+- Import `CartScreen` in `App.js`
+- Create a route for `CartScreen` - `<Route path='/cart/:id?' component={CartScreen} />
+- REVIEW AND UPDATE THIS PAGE
