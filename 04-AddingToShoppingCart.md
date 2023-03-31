@@ -5,10 +5,11 @@
 
 ```
 ...
+import { useEffect, useState } from 'react'
 import { Row, Col, Image, ListGroup, Button, Card, Form } from 'react-bootstrap'
 ...
 
-function ProductScreen({ match, history }) {
+function ProductScreen({ history }) {
   const [qty, setQty] = useState(1)
  
   ...
@@ -69,12 +70,11 @@ useEffect(() => {
 }
 
 const addToCartHandler = () => {
-  history.push(`/cart/${match.params.id}?qty=${qty}`)
+  history.push(`/cart/${product_id.id}?qty=${qty}`)
 }
 ...
 ```
 
 - Add `CartScreen.js` in the `screens` directory and fill with `rfce`
 - Import `CartScreen` in `App.js`
-- Create a route for `CartScreen` - `<Route path='/cart/:id?' component={CartScreen} />`
-- REVIEW AND UPDATE THIS PAGE
+- Create a route for `CartScreen` - `<Route path='/cart/:id?' element={<CartScreen />} />`
