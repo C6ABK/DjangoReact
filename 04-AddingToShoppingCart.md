@@ -6,11 +6,13 @@
 ```
 ...
 import { useEffect, useState } from 'react'
+import { Link, useParams, useNavigate } from 'react-router-dom' 
 import { Row, Col, Image, ListGroup, Button, Card, Form } from 'react-bootstrap'
 ...
 
-function ProductScreen({ history }) {
+function ProductScreen() {
   const [qty, setQty] = useState(1)
+  let navigate = useNavigate()
  
   ...
 }
@@ -70,7 +72,7 @@ useEffect(() => {
 }
 
 const addToCartHandler = () => {
-  history.push(`/cart/${product_id.id}?qty=${qty}`)
+  navigate(`/cart/${product_id.id}?qty=${qty}`)
 }
 ...
 ```
