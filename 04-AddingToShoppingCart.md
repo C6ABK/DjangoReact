@@ -91,7 +91,7 @@ export const CART_REMOVE_ITEM = 'CART_REMOVE_ITEM'
 ```
 
 - Add `cartReducers.js` to `reducers`
-- Fill as below
+- Fill as below - this checks if the product is already in the cart
 
 ```
 import { CART_ADD_ITEM } from '../constants/cartConstants
@@ -120,4 +120,15 @@ export const cartReducer = (state={cartItems:[]}, action) => {
       return state
   }
 }
+```
+- Go to `store.js` and modify as below...
+
+```
+...
+import { cartReducer } from './reducers/cartReducers'
+
+const reducer = combineReducers({
+  ...
+  cart: cartReducer,
+})
 ```
