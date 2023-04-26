@@ -80,3 +80,44 @@ const addToCartHandler = () => {
 - Add `CartScreen.js` in the `screens` directory and fill with `rfce`
 - Import `CartScreen` in `App.js`
 - Create a route for `CartScreen` - `<Route path='/cart/:id?' element={<CartScreen />} />`
+
+## Cart Reducer & Action
+- Add `cartConstants.js` to `constants`
+- Fill as below
+
+```
+export const CART_ADD_ITEM = 'CART_ADD_ITEM'
+export const CART_REMOVE_ITEM = 'CART_REMOVE_ITEM'
+```
+
+- Add `cartReducers.js` to `reducers`
+- Fill as below
+
+```
+import { CART_ADD_ITEM } from '../constants/cartConstants
+
+export const cartReducer = (state={cartItems:[]}, action) => {
+  switch(action.type){
+    case CART_ADD_ITEM:
+      const item = action.payload
+      const existItem = state.cartItems.find(x => x.product === item.product)
+      
+      if(existItem){
+        return {
+          ...state,
+          cartItems: state.cartItems.map(x => 
+            x.product === existItem.product ? item : x
+          )
+        }
+      } else {
+        return {
+          ...state,
+          cartItems:[...state.cartItems, item]
+        }
+      }
+      
+    default:
+      return state
+  }
+}
+```
