@@ -132,3 +132,17 @@ const reducer = combineReducers({
   cart: cartReducer,
 })
 ```
+
+### Actions
+- Add `cartActions.js` in the `actions` folder
+- Fill as below
+
+```
+import axios from 'axios'
+import { CART_ADD_ITEM } from '../constants/cartConstants'
+
+export const addToCart = (id, qty) => async (dispatch, getState) => {
+  
+}
+```
+
