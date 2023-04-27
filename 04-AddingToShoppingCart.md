@@ -322,3 +322,57 @@ h2 {
 }
 
 ```
+
+## Remove Items From Cart
+- Go to `cartReducers.js` 
+
+```
+import { CART_ADD_ITEM, CART_REMOVE_ITEM } from '../constants/cartConstants'
+
+...
+  case CART_ADD_ITEM:
+    ...
+    
+  case CART_REMOVE_ITEM:
+    return {
+      ...state,
+      cartItems: state.cartItems.filter(x => x.product !== action.payload)
+    }
+    
+  default:
+    return state
+
+
+```
+
+- Go to `cartActions.js`
+
+```
+...
+import { CART_ADD_ITEM, CART_REMOVE_ITEM } from '../constants/cartConstants'
+
+export const addToCart... {
+  ...
+}
+
+export const removeFromCart = (id) => (dispatch, getState) => {
+  dispatch({
+    type: CART_REMOVE_ITEM,
+    payload: id,
+  })
+  localStorage.setItem('cartItems', JSON.stringify(getState().cart.cartItems))
+}
+
+```
+
+- Go to `CartScreen.js`
+
+```
+...
+import { addToCart, removeFromCart } from '../actions/cartActions'
+...
+const removeFromCartHandler = (id) => {
+  dispatch(removeFromCart(id))
+}
+
+```
