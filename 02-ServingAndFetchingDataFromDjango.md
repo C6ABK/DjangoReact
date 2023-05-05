@@ -142,7 +142,7 @@ def getProduct(request, pk):
   return Response(product)
 ```
 
-- Add the url in `base/urls.py` - `path("products/<str:pk>/, views.getProduct, name="product")`
+- Add the url in `base/urls.py` - `path("products/<str:pk>/", views.getProduct, name="product")`
 
 ## Fetching Data
 ### HomeScreen.js
