@@ -26,6 +26,7 @@
 
 ```
 ...
+# Use this to test but remove when customising JWT Fields
 from rest_framework_simplejwt.views import (
   TokenObtainPairView,
 )
@@ -72,5 +73,41 @@ SIMPLE_JWT = {
   'SLIDING_TOKEN_LIFETIME': timedelta(minutes=5),
   'SLIDING_TOKEN_REFRESH_LIFETIME': timedelta(days=1),
 }
+```
 
+## Customising JWT Token fields
+- Go to `base/views.py` and add the following imports
+
+```
+from rest_framework_simplejwt.serializers import TokenObtainPairSerializer
+from rest_framework_simplejwt.views import TokenObtainPairView
+```
+
+- Remove the previous import from `urls.py`
+```
+# DELETE THIS
+from rest_framework_simplejwt.views import (
+  TokenObtainPairView,
+)
+```
+
+- Go back to `views.py` and add the following classes...
+
+```
+class MyTokenObtainPairSerializer(TokenObtainPairSerializer):
+  def validate(self, attrs):
+    data = super().validate(attrs)
+    
+    data['username'] = self.user.username
+    data['email'] = self.user.email
+    
+    return data
+    
+class MyTokenObtainPairView(TokenObtainPairView):
+  serializer_class= MyTokenObtainPairSerializer
+```
+
+- Go to `urls.py` and update the route as below
+```
+path('users/login/', views.MyTokenObtainPairView.as_view(),
 ```
