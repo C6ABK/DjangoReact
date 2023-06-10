@@ -111,3 +111,38 @@ class MyTokenObtainPairView(TokenObtainPairView):
 ```
 path('users/login/', views.MyTokenObtainPairView.as_view(),
 ```
+
+## User Serializer
+- Go to `serializers.py` and add the `UserSerializer` class
+
+```
+class UserSerializer(serializers.ModelSerializer):
+  class Meta:
+    model = User
+    fields = ['id, 'username', 'email']
+```
+
+- Import into `base/views.py`
+
+```
+from .serializers import ProductSerializer, UserSerializer
+```
+
+- Staying in `views.py`, create a view as below
+
+```
+@api_view(['GET'])
+def getUserProfile(request):
+  user = request.user
+  products = Product.objects.all()
+  serializer = UserSerializer(user, many=False)
+  return Response(serializer.data)
+```
+
+- In `base/urls.py` add the following path
+
+```
+...
+path('users/profile/', views.getUserProfile, name="users-profile"),
+...
+```
