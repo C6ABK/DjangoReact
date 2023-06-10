@@ -118,10 +118,18 @@ path('users/login/', views.MyTokenObtainPairView.as_view(),
 ```
 class UserSerializer(serializers.ModelSerializer):
   name = serializers.SerializerMethodField(read_only=True)
+  _id = serializers.SerializerMethodField(read_only=True)
+  isAdmin = serializers.SerializerMethodField(read_only=True)
 
   class Meta:
     model = User
-    fields = ['id, 'username', 'email', 'name']
+    fields = ['id', '_id', 'username', 'email', 'name', 'isAdmin']
+    
+  def get__id(self, obj):
+    return obj.id
+    
+  def get_isAdmin(self, obj):
+    return obj.is_staff
     
   def get_name(self, obj):
     name = obj.first_name
@@ -158,3 +166,46 @@ path('users/profile/', views.getUserProfile, name="users-profile"),
 
 - Test this in Postman by sending a get request to /api/users/profile/.
   - Send `Authorization` - `Bearer accesstokenhere` and it should return the user's ID, Username and Email
+
+- In `serializers.py` ...
+
+```
+...
+from rest_framework_simplejwt.tokens import RefreshToken
+...
+```
+
+- Add the `UserSerializerWithToken` class
+
+```
+...
+class UserSerializerWithToken(UserSerializer):
+    token = serializers.SerializerMethodField(read_only=True)
+    class Meta:
+      model = User
+      fields = ['id', '_id', 'username', 'email', 'name', 'isAdmin', 'token']
+      
+    def get_token(self, obj):
+      token = RefreshToken.for_user(obj)
+      return str(token.access_token)
+    
+...
+```
+
+- Go to `base/views.py` and modify as below...
+
+```
+... 
+from .serializers import ProductSerializer, UserSerializer, UserSerializerWithToken
+
+class MyTokenObtainPairSerializer(TokenObtainPairSerializer):
+  def validate(self, attrs):
+    data = super().validate(attrs)
+    
+    serializer = UserSerializerWithToken(self.user).data
+    
+    for k, v in serializer.items():
+      data[k] = v
+    
+    return data
+```
