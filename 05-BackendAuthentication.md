@@ -146,3 +146,6 @@ def getUserProfile(request):
 path('users/profile/', views.getUserProfile, name="users-profile"),
 ...
 ```
+
+- Test this in Postman by sending a get request to /api/users/profile/.
+  - Send `Authorization` - `Bearer accesstokenhere` and it should return the user's ID, Username and Email
