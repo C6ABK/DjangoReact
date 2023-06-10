@@ -117,9 +117,18 @@ path('users/login/', views.MyTokenObtainPairView.as_view(),
 
 ```
 class UserSerializer(serializers.ModelSerializer):
+  name = serializers.SerializerMethodField(read_only=True)
+
   class Meta:
     model = User
-    fields = ['id, 'username', 'email']
+    fields = ['id, 'username', 'email', 'name']
+    
+  def get_name(self, obj):
+    name = obj.first_name
+    if name == '':
+      name = obj.email
+    
+    return name
 ```
 
 - Import into `base/views.py`
