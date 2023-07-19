@@ -247,3 +247,33 @@ def getUsers(request):
 path('users/', views.getUsers, name="users"),
 ...
 ```
+
+## Register User
+- Go to `base/views.py` and get rid of `def getRoutes`
+- Go to `base/urls.py` and get rid of the `view.getRoutes` path
+- Go back to `base/views.py` and create the `registerUser` route as below
+```
+from django.contrib.auth.hashers import make_password
+
+...
+
+@api_view(['POST'])
+def registerUser(request):
+  data = request.data
+
+  user = User.objects.create(
+    first_name=data['name'],
+    username=data['email'],
+    email=data['email'],
+    password=make_password(data['password']),
+  )
+  serializer = UserSerializerWithToken(user, many=False)
+  return Response(serializer.data)
+```
+
+- Go to `base/urls.py` and add the path
+```
+...
+path('users/register/', views.registerUser, name='register'),
+...
+```
