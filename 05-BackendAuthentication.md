@@ -209,3 +209,41 @@ class MyTokenObtainPairSerializer(TokenObtainPairSerializer):
     
     return data
 ```
+
+## Protected Routes
+- Go to `base/views.py` and import the `permission_classes` decorator and permissions
+```
+...
+from rest_framework.decorators import api_view, permission_classes
+from rest_framework.permissions import IsAuthenticated, IsAdminUser
+...
+```
+
+- Modify the user profile route as below
+```
+@api_view(['GET'])
+@permission_classes([IsAuthenticated])
+def getUserProfile(request):
+  ...
+```
+
+- Create a user's route that should only be visible for an admin user
+```
+from django.contrib.auth.models import User
+
+...
+
+@api_view(['GET'])
+@permission_classes([IsAdminUser])
+def getUsers(request):
+  users = User.objects.all()
+  serializer = UserSerializer(users, many=True)
+  return Response(serializer.data)
+```
+
+- Go to `base/urls.py` and add the users route
+```
+...
+path('users/', views.getUsers, name="users"),
+...
+```
