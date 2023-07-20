@@ -108,6 +108,7 @@ class MyTokenObtainPairView(TokenObtainPairView):
 ```
 
 - Go to `urls.py` and update the route as below
+
 ```
 path('users/login/', views.MyTokenObtainPairView.as_view(),
 ```
@@ -212,6 +213,7 @@ class MyTokenObtainPairSerializer(TokenObtainPairSerializer):
 
 ## Protected Routes
 - Go to `base/views.py` and import the `permission_classes` decorator and permissions
+
 ```
 ...
 from rest_framework.decorators import api_view, permission_classes
@@ -220,6 +222,7 @@ from rest_framework.permissions import IsAuthenticated, IsAdminUser
 ```
 
 - Modify the user profile route as below
+
 ```
 @api_view(['GET'])
 @permission_classes([IsAuthenticated])
@@ -228,6 +231,7 @@ def getUserProfile(request):
 ```
 
 - Create a user's route that should only be visible for an admin user
+
 ```
 from django.contrib.auth.models import User
 
@@ -242,6 +246,7 @@ def getUsers(request):
 ```
 
 - Go to `base/urls.py` and add the users route
+
 ```
 ...
 path('users/', views.getUsers, name="users"),
@@ -252,6 +257,7 @@ path('users/', views.getUsers, name="users"),
 - Go to `base/views.py` and get rid of `def getRoutes`
 - Go to `base/urls.py` and get rid of the `view.getRoutes` path
 - Go back to `base/views.py` and create the `registerUser` route as below
+
 ```
 from django.contrib.auth.hashers import make_password
 from rest_framework import status
@@ -291,6 +297,7 @@ path('users/register/', views.registerUser, name='register'),
 - Go to `base` and create `signals.py`
 - Go to `base/apps.py` and modify as below
 - Ensure `settings.py` contains `'base.apps.BaseConfig',`
+
 ```
 from django.apps import AppConfig
 
@@ -302,6 +309,7 @@ class BaseConfig(AppConfig):
 ```
 
 - Fill `signals.py` as below to test config
+
 ```
 from django.db.models.signals import pre_save
 from django.contrib.auth.models import User
@@ -313,6 +321,7 @@ pre_save.connect(updateUser, sender=User)
 ```
 
 - Modify `signals.py` as below
+
 ```
 from django.db.models.signals import pre_save
 from django.contrib.auth.models import User
@@ -327,6 +336,7 @@ pre_save.connect(updateUser, sender=User)
 
 ## URLs and Views Cleanup
 - Go to `backend/urls.py` and modify the `urlpatterns` as below
+
 ```
 urlpatterns = [
   path('admin/', admin.site.urls),
@@ -366,4 +376,10 @@ def getProduct(request, pk):
   product = Product.objects.get(_id=pk)
   serializer = ProductSerializer(product, many=False)
   return Response(serializer.data)
+```
+
+### user_views.py
+
+```
+
 ```
