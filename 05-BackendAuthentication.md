@@ -282,3 +282,63 @@ def registerUser(request):
 path('users/register/', views.registerUser, name='register'),
 ...
 ```
+
+## Login With Email
+
+### Django Signals
+- Signals allow certain senders to notify a set of receivers that some action has taken place.
+- We want to use pre_save and post_save here
+- Go to `base` and create `signals.py`
+- Go to `base/apps.py` and modify as below
+- Ensure `settings.py` contains `'base.apps.BaseConfig',`
+```
+from django.apps import AppConfig
+
+class BaseConfig(AppConfig):
+  name = 'base'
+
+  def ready(self):
+    import base.signals
+```
+
+- Fill `signals.py` as below to test config
+```
+from django.db.models.signals import pre_save
+from django.contrib.auth.models import User
+
+def updateUser(sender, instance, **kwargs):
+  print('Signal triggered')
+
+pre_save.connect(updateUser, sender=User)
+```
+
+- Modify `signals.py` as below
+```
+from django.db.models.signals import pre_save
+from django.contrib.auth.models import User
+
+def updateUser(sender, instance, **kwargs):
+  user = instance
+  if user.email != '':
+    user.username = user.email
+
+pre_save.connect(updateUser, sender=User)
+```
+
+## URLs and Views Cleanup
+- Go to `backend/urls.py` and modify the `urlpatterns` as below
+```
+urlpatterns = [
+  path('admin/', admin.site.urls),
+  #path('api/', include('base.urls')), delete/comment out this line
+  path('api/products/', include('base.urls.product_urls')),
+  path('api/users/', include('base.urls.user_urls')),
+  path('api/orders/', include('base.urls.order_urls')),
+]
+```
+
+- Go to `base` and create the `views` folder
+- In `base/views` create the following files
+  - order_views.py
+  - product_views.py
+  - user_views.py
