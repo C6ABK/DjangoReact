@@ -344,6 +344,7 @@ urlpatterns = [
   - user_views.py
 
 ### product_views.py
+
 ```
 from django.shortcuts import render
 from rest_framework.decorators import api_view, permission_classes
