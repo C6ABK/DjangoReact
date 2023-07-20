@@ -360,9 +360,8 @@ from django.shortcuts import render
 from rest_framework.decorators import api_view, permission_classes
 from rest_framework.permissions import IsAuthenticated, IsAdminUser
 from rest_framework.response import Response
-from .models import Product
-from .products import products
-from .serializers import ProductSerializer
+from base.models import Product
+from base.serializers import ProductSerializer
 from rest_framework import status
 
 @api_view(['GET'])
@@ -385,8 +384,7 @@ from django.shortcuts import render
 from rest_framework.decorators import api_view, permission_classes
 from rest_framework.permissions import IsAuthenticated, IsAdminUser
 from rest_framework.response import Response
-from .products import products
-from .serializers import ProductSerializer, UserSerializer, UserSerializerWithToken
+from base.serializers import ProductSerializer, UserSerializer, UserSerializerWithToken
 from rest_framework_simplejwt.serializers import TokenObtainPairSerializer
 from rest_framework_simplejwt.views import TokenObtainPairView
 from django.contrib.auth.hashers import make_password
@@ -428,7 +426,7 @@ def registerUser(request):
 def getUserProfile(request):
   user = request.user
   serializer = UserSerializer(user, many=False)
-  return Response('data')
+  return Response(serializer.data)
 
 @api_view(['GET'])
 @permission_classes([IsAdminUser])
@@ -437,3 +435,49 @@ def getUsers(request):
   serializer = UserSerializer(users, many=True)
   return Response(serializer.data)
 ```
+
+- `base/views.py` can now be deleted
+- Create the `urls` folder in `base`
+- Create the following in `base/urls/`
+  - order_urls.py
+  - product_urls.py
+  - user_urls.py
+
+### product_urls.py
+
+```
+from django.urls import path
+from base.views import product_views as views
+
+urlpatterns = [
+  path('', views.getProducts, name="products"),
+  path('<str:pk>/', views.getProduct, name="product"),
+]
+```
+
+### user_urls.py
+
+```
+from django.urls import path
+from base.views import user_views as views
+
+urlpatterns = [
+  path('login/', views.MyTokenObtainPairView.as_view(), name="token_obtain_pair"),
+  path('register/', views.registerUser, name="register"),
+  path('profile/', views.getUserProfile, name="users-profile"),
+  path('', views.getUsers, name="users"),
+]
+```
+
+### order_urls.py
+
+```
+from django.urls import path
+from base.views import order_views as views
+
+urlpatterns = [
+
+]
+```
+
+- Delete the FILE `base.urls.py`
