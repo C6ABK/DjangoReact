@@ -71,3 +71,80 @@ export const userLoginReducer = (state = {}, action) => {
   }
 }
 ```
+
+### store.js
+- Modify `store.js` as below
+
+```
+...
+import { userLoginReducer } from './reducers/userReducers'
+
+const reducer = combineReducers({
+  ...
+  userLogin: userLoginReducer,
+})
+```
+
+### userActions.js
+- Create `actions/userActions.js`
+
+```
+import axios from 'axios'
+import {
+  USER_LOGIN_REQUEST,
+  USER_LOGIN_SUCCESS,
+  USER_LOGIN_FAIL,
+  USER_LOGOUT,
+} from '../constants/userConstants'
+
+export const login = (email, password) => async(dispatch) => {
+  try {
+    dispatch({
+      type: USER_LOGIN_REQUEST
+    })
+
+    const config = {
+      headers: {
+        'Content-type':'application/json'
+      }
+    }
+
+    const {data} = await axios.post(
+      '/api/users/login/'
+      { 'username': email, 'password': password },
+      config
+    )
+
+    dispatch({
+      type: USER_LOGIN_SUCCESS,
+      payload: data
+    })
+
+    localStorage.setItem('userInfo', JSON.stringify(data))
+
+  } catch (error) {
+    dispatch({
+      type: USER_LOGIN_FAIL,
+      payload: error.response && error.response.data.detail
+        ? error.response.data.detail
+        : error.message,
+    })
+  }
+}
+```
+
+### Back to store.js
+- Add `userInfoFromStorage`
+
+```
+...
+const userInfoFromStorage = localStorage.getItem('userInfo') ?
+  JSON.parse(localStorage.getItem('userInfo')) : null
+
+const initialState = {
+  cart: { cartItems: cartItemsFromStorage },
+  userLogin: { userInfo: userInfoFromStorage }
+}
+
+...
+```
