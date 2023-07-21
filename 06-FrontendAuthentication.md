@@ -148,3 +148,67 @@ const initialState = {
 
 ...
 ```
+
+## Login Screen & Functionality
+- Create `screens/LoginScreen.js
+
+```
+import React, { useState, useEffect } from 'react'
+import { Link } from 'react-router-dom'
+import { Form, Button, Row, Col } from 'react-bootstrap'
+import { useDispatch, useSelector { from 'react-redux'
+import Loader from '../components/Loader'
+import Message from '../components/Message'
+import { login } from '../actions/userActions'
+
+function LoginScreen(){
+  const [email, setEmail] = useState('')
+  const [password, setPassword] = useState('')
+
+  return (
+    <div>
+      Login Screen
+    </div>
+  )
+}
+```
+
+- Go to `App.js` and add the route
+
+```
+...
+import LoginScreen from './screens/LoginScreen'
+
+function App(){
+  return (
+    <Header />
+    <main className="py-3">
+      <Container>
+        <Route path="/" component={HomeScreen} exact />
+        <Route path="/login" component={LoginScreen} />
+        ...
+      </Container>
+    </main>
+  )
+}
+```
+
+### Form Container
+- Create `components/FormContainer.js`
+
+```
+import React from 'react'
+import { Container, Row, Col } from 'react-bootstrap'
+
+function FormContainer({ children }) {
+  return (
+    <Container>
+      <Row className="justify-content-md-center">
+        <Col xs={12} md={6}>
+          {children}
+        </Col>
+      </Row>
+    </Container>
+  )
+}
+```
