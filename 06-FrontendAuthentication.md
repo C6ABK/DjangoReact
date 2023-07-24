@@ -295,3 +295,60 @@ function LoginScreen({location, history}){
 
 export default LoginScreen
 ```
+
+## User in Navbar & Logout
+- Open `components/Header.js` and modify as below
+
+```
+...
+import { useDispatch, useSelector } from 'react-redux'
+import { logout } from '../actions/userActions'
+...
+
+function Header() {
+  const userLogin = useSelector(state => state.userLogin)
+  const { userInfo } = userLogin
+
+const dispatch = useDispatch()
+
+  const logoutHandler = () => {
+    dispatch(logout())
+  }
+
+  return (
+    <header>
+      ...
+      <Navbar.Collapse id="basic-navbar-nav">
+        <Nav className="mr-auto">
+          <LinkContainer to='/cart'>
+            <Nav.Link>...</Nav.Link>
+          </LinkContainer
+
+          {userInfo ? (
+            <NavDropdown title={userInfo.name} id='username'>
+              <LinkContainer to='/profile'>
+                <NavDropdown.Item>Profile</NavDropdown.Item>
+              </LinkContainer>
+              <NavDropdown.Item onClick={logoutHandler}>Logout</NavDropdown.Item>
+            </NavDropdown>
+          ): (
+            <LinkContainer to='/login'>
+              <Nav.Link>...</Nav.Link>
+            </LinkContainer
+          )}
+        </Nav>
+      </Navbar.Collapse>
+    </header>
+  )
+}
+```
+
+- Go to `actions/userActions.js` and add the logout at the bottom
+
+```
+...
+export const logout = () => (dispatch) => {
+  localStorage.removeItem('userInfo')
+  dispatch(type: USER_LOGOUT)
+}
+```
