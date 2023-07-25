@@ -352,3 +352,149 @@ export const logout = () => (dispatch) => {
   dispatch(type: USER_LOGOUT)
 }
 ```
+
+## User Register Reducer, Action & Screen
+- Go into `constants/userConstants.js` and modify as below
+
+```
+...
+export const USER_REGISTER_REQUEST = 'USER_REGISTER_REQUEST'
+export const USER_REGISTER_SUCCESS = 'USER_REGISTER_SUCCESS'
+export const USER_REGISTER_FAIL = 'USER_REGISTER_FAIL'
+```
+
+- Go to `reducers/userReducers.js` and modify as below
+
+```
+import {
+  ...
+  USER_REGISTER_REQUEST,
+  USER_REGISTER_SUCCESS,
+  USER_REGISTER_FAIL,
+} from '../constants/userConstants'
+
+...
+
+export const userRegisterReducer = (state = {}, action) => {
+  switch (action.type) {
+    case USER_REGISTER_REQUEST:
+      return { loading: true }
+
+    case USER_REGISTER_SUCCESS:
+      return { loading: false, userInfo: action.payload }
+
+    case USER_REGISTER_FAIL:
+      return { loading: false, error: action.payload }
+
+    case USER_LOGOUT:
+      return {}
+  }
+}
+```
+
+- Go to `store.js`
+
+```
+...
+import { userLoginReducer, userRegisterReducer } from './reducers/userReducers'
+
+const reducer = combineReducers({
+  ...
+  userLogin: userLoginReducer,
+  userRegister: userRegisterReducer,
+})
+```
+
+- Go to `actions/userActions.js`
+
+```
+...
+import {
+  ...
+  USER_REGISTER_REQUEST,
+  USER_REGISTER_SUCCESS,
+  USER_REGISTER_FAIL,  
+} from '../constants/userConstants'
+
+...
+
+export const register = (name, email, password) => async (dispatch) => {
+  try {
+    dispatch({
+      type: USER_REGISTER_REQUEST
+    })
+
+    const config = {
+      headers: {
+        'Content-type': 'application/json'
+      }
+    }
+
+    const { data } = await axios.post(
+      '/api/users/register/',
+      { 'name': name, 'username': email, 'password': password },
+      config
+    )
+
+    dispatch({
+      type: USER_REGISTER_SUCCESS,
+      payload: data
+    })
+
+    localStorage.setItem('userInfo', JSON.stringify(data))
+
+  } catch (error) {
+    dispatch({
+      type: USER_REGISTER_FAIL,
+      payload: error.response && error.response.data.detail
+    })
+  }
+}
+```
+
+- Create `screens/RegisterScreen.js`
+
+```
+import React, { useState, useEffect } from 'react'
+import { Link } from 'react-router-dom'
+import { Form, Button, Row, Col } from 'react-bootstrap'
+import { useDispatch, useSelector } from 'react-redux'
+import Loader from '../components/Loader'
+import Message from '../components/Message'
+import FormContainer from '../components/FormContainer'
+import { login } from '../actions/userActions'
+
+function RegisterScreen({ location, history }) {
+
+  const [name, setName] = useState('')
+  const [email, setEmail] = useState('')
+  const [password, setPassword] = useState('')
+  const [confirmPassword, setConfirmPassword] = useState('')
+  const [message, setMessage] = useState('')
+
+  const dispatch = useDispatch()
+
+  const redirect = location.search ? location.search.split('=')[1] : '/'
+
+  const userRegister = useSelector(state => state.userRegister)
+  const { error, loading, userInfo } = userRegister
+
+  useEffect(() => {
+    if (userInfo) {
+      history.push(redirect)
+    }
+  }, [history, userInfo, redirect])
+
+  const submitHandler = (e) => {
+    e.preventDefault()
+    dispatch(register(name, email, password))
+  }
+
+  return (
+    <div>
+
+    </div>
+  )
+}
+export default RegisterScreen
+```
