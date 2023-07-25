@@ -432,12 +432,17 @@ export const register = (name, email, password) => async (dispatch) => {
 
     const { data } = await axios.post(
       '/api/users/register/',
-      { 'name': name, 'username': email, 'password': password },
+      { 'name': name, 'email': email, 'password': password },
       config
     )
 
     dispatch({
       type: USER_REGISTER_SUCCESS,
+      payload: data
+    })
+
+    dispatch({
+      type: USER_LOGIN_SUCCESS,
       payload: data
     })
 
@@ -487,14 +492,105 @@ function RegisterScreen({ location, history }) {
 
   const submitHandler = (e) => {
     e.preventDefault()
-    dispatch(register(name, email, password))
+
+    if (password != confirmPassword){
+      setMessage('Passwords do not match')
+    } else {
+      dispatch(register(name, email, password))
+    }
   }
 
   return (
-    <div>
+    <FormContainer>
+      <h1>Register</h1>
+      {message && <Message variant='danger'>{message}</Message>}
+      {error && <Message variant='danger'>{error}</Message>}
+      {loading && <Loader />}
+      <Form onSubmit={submitHandler}>
 
-    </div>
+        <Form.Group controlId='name'>
+          <Form.Label>Name</Form.Label>
+          <Form.Control
+            required
+            type='name'
+            placeholder='Enter Name'
+            value={name}
+            onChange={(e) => setName(e.target.value)}
+          >
+          </Form.Control>
+        </Form.Group>
+
+        <Form.Group controlId='email'>
+          <Form.Label>Email Address</Form.Label>
+          <Form.Control
+            required
+            type='email'
+            placeholder='Enter Email'
+            value={email}
+            onChange={(e) => setEmail(e.target.value)}
+          >
+          </Form.Control>
+        </Form.Group>
+
+        <Form.Group controlId='password'>
+          <Form.Label>Password</Form.Label>
+          <Form.Control
+            required
+            type='password'
+            placeholder='Enter Password'
+            value={password}
+            onChange={(e) => setPassword(e.target.value)}
+          >
+          </Form.Control>
+        </Form.Group>
+
+        <Form.Group controlId='passwordConfirm'>
+          <Form.Label>Confirm Password</Form.Label>
+          <Form.Control
+            required
+            type='password'
+            placeholder='Confirm Password'
+            value={confirmPassword}
+            onChange={(e) => setConfirmPassword(e.target.value)}
+          >
+          </Form.Control>
+        </Form.Group>
+
+        <Button type='submit' variant='primary'>
+          Register
+        </Button>
+
+      </Form>
+
+      <Row className='py-3'>
+        <Col>
+          Have an Account?
+          <Link
+            to={redirect ? `/login?redirect=&{redirect}` : '/login'}
+          >
+            Sign In
+          </Link>
+        </Col>
+      </Row>
+    </FormContainer>
   )
 }
 export default RegisterScreen
 ```
+
+- Go to `App.js` and modify as below
+
+```
+...
+import RegisterScreen from './screens/RegisterScreen'
+
+...
+
+<Container>
+  ...
+  <Route path='/register' component={RegisterScreen} />
+</Container>
+
+...
+```
+
