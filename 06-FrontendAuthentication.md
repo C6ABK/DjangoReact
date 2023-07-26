@@ -654,6 +654,7 @@ class UserSerializerWithToken(UserSerializer):
 export const USER_DETAILS_REQUEST = 'USER_DETAILS_REQUEST'
 export const USER_DETAILS_SUCCESS = 'USER_DETAILS_SUCCESS'
 export const USER_DETAILS_FAIL = 'USER_DETAILS_FAIL'
+export const USER_DETAILS_RESET = 'USER_DETAILS_RESET'
 ```
 
 - Go to `reducers/userReducers`
@@ -665,6 +666,7 @@ import {
   USER_DETAILS_REQUEST,
   USER_DETAILS_SUCCESS,
   USER_DETAILS_FAIL,
+  USER_DETAILS_RESET,
 } from '../constants/userConstants'
 
 ...
@@ -679,6 +681,9 @@ export const userDetailsReducer = (state = { user: {} }, action) => {
 
     case USER_DETAILS_FAIL:
       return { loading: false, error: action.payload }
+
+    case USER_DETAILS_RESET:
+      return { user: {} }
 
     default:
       return state
@@ -708,6 +713,7 @@ import {
   USER_DETAILS_REQUEST,
   USER_DETAILS_SUCCESS,
   USER_DETAILS_FAIL,
+  USER_DETAILS_RESET,
 } from '../constants.userConstants'
 
 export const getUserDetails = (id) => async (dispatch, getState) => {
@@ -1005,7 +1011,28 @@ export const updateUserProfile = (user) => async (dispatch, getState) => {
 ```
 ...
 import { getUserDetails, updateUserProfile } from '../actions/userActions'
+import { USER_UPDATE_PROFILE_RESET } from '../constants/userConstants'
+...
 
+const userLogin = useSelector(state => state.userLogin)
+const { userInfo } = userLogin
+
+const userUpdateProfile = useSelector(state => state.userUpdateProfile)
+const { success } = userUpdateProfile
+
+useEffect(() => {
+  if (!userInfo) {
+    history.push('/login')
+  } else {
+    if (!user || !user.name || success) {
+      dispatch({ type: USER_UPDATE_PROFILE_RESET })
+      dispatch(getUserDetails('profile'))
+    } else {
+      setName(user.name)
+      setEmail(user.email)
+    }
+  }
+}, [dispatch, history, userInfo, user, success])
 ...
 
 const submitHandler = (e) => {
@@ -1020,6 +1047,20 @@ const submitHandler = (e) => {
       'email': email,
       'password': password
     }))
+    setMessage('')
   }
+}
+```
+
+## User Details Cleanup
+- Logging out and logging back in with a different user will show the previous user's details in the User Profile page
+- You've gone back and populated the constant and reducer already - lecture 46 for additional help
+- Go to `actions/userActions.js` and ensure `USER_DETAILS_RESET` is imported with the constants. Modify the logout as below...
+
+```
+export const logout = () => (dispatch) => {
+  localStorage.removeItem('userInfo')
+  dispatch({ type: USER_LOGOUT })
+  dispatch({ type: USER_DETAILS_RESET })
 }
 ```
