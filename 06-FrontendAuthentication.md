@@ -738,7 +738,7 @@ export const getUserDetails = (id) => async (dispatch, getState) => {
     })
   } catch (error) {
     dispatch({
-      type: USER_REGISTER_FAIL,
+      type: USER_DETAILS_FAIL,
       payload: error.response && error.response.data.detail
         ? error.response.data.detail
         : error.message,
@@ -879,4 +879,147 @@ import ProfileScreen from './screens/ProfileScreen'
   ...
 </Container
 ...
+```
+
+## Update User Profile
+
+- Go to `constants/userConstants.js`
+
+```
+...
+export const USER_UPDATE_PROFILE_REQUEST = 'USER_UPDATE_PROFILE_REQUEST'
+export const USER_UPDATE_PROFILE_SUCCESS = 'USER_UPDATE_PROFILE_SUCCESS'
+export const USER_UPDATE_PROFILE_FAIL = 'USER_UPDATE_PROFILE_FAIL'
+export const USER_UPDATE_PROFILE_RESET = 'USER_UPDATE_PROFILE_RESET'
+```
+
+- Go to `reducers/userReducers.js`
+
+```
+...
+import {
+  ...
+  USER_UPDATE_PROFILE_REQUEST,
+  USER_UPDATE_PROFILE_SUCCESS,
+  USER_UPDATE_PROFILE_FAIL,
+  USER_UPDATE_PROFILE_RESET,
+} from '../constants/userConstants'
+
+...
+
+export const userUpdateProfileReducer = (state = {}, action) => {
+  switch (action.type) {
+    case USER_UPDATE_PROFILE_REQUEST:
+      return { loading: true }
+
+    case USER_UPDATE_PROFILE_SUCCESS:
+      return { loading: false, success: true, userInfo: action.payload }
+
+    case USER_UPDATE_PROFILE_FAIL:
+      return { loading: false, error: action.payload }
+
+    case USER_UPDATE_PROFILE_RESET:
+      return {}
+
+    default:
+      return state
+  }
+}
+```
+
+- Go to `store.js`
+
+```
+...
+import { userLoginReducer, userRegisterReducer, userDetailsReducer, userUpdateProfileReducer} from './reducers/userReducers'
+
+const reducer = combineReducers({
+  ...
+  userDetails: userDetailsReducer,
+  userUpdateProfile: userUpdateProfileReducer,
+})
+```
+
+- Go to `actions/userActions.js`
+
+```
+import axios from 'axios'
+import {
+  ...
+  USER_UPDATE_PROFILE_REQUEST,
+  USER_UPDATE_PROFILE_SUCCESS,
+  USER_UPDATE_PROFILE_FAIL,
+  USER_UPDATE_PROFILE_RESET,
+} from '../constants/userConstants
+
+...
+
+export const updateUserProfile = (user) => async (dispatch, getState) => {
+  try {
+    dispatch({
+      type: USER_UPDATE_PROFILE_REQUEST
+    })
+
+    const {
+      userLogin: {userInfo},
+    } = getState()
+
+    const config = {
+      headers: {
+        'Content-type': 'application/json',
+        Authorization: `Bearer ${userInfo.token}`
+      }
+    }
+
+    const { data } = await axios.put(
+      `/api/users/profile/update/`,
+      user,
+      config
+    )
+
+    dispatch({
+      type: USER_UPDATE_PROFILE_SUCCESS,
+      payload: data
+    })
+
+    dispatch({
+      type: USER_LOGIN_SUCCESS,
+      payload: data
+    })
+
+    localStorage.setItem('userInfo', JSON.stringify(data))
+
+  } catch (error) {
+    dispatch({
+      type: USER_UPDATE_PROFILE_FAIL,
+      payload: error.response && error.response.data.detail
+        ? error.response.data.detail
+        : error.message,
+    })
+  }
+}
+```
+
+- Go to `screens/ProfileScreen.js`
+
+```
+...
+import { getUserDetails, updateUserProfile } from '../actions/userActions'
+
+...
+
+const submitHandler = (e) => {
+  e.preventDefault()
+
+  if (password != confirmPassword) {
+    setMessage('Passwords do not match')
+  } else {
+    dispatch(updateUserProfile({
+      'id': user._id,
+      'name': name,
+      'email': email,
+      'password': password
+    }))
+  }
+}
 ```
