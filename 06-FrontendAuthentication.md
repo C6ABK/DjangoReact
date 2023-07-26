@@ -594,3 +594,53 @@ import RegisterScreen from './screens/RegisterScreen'
 ...
 ```
 
+## Update Profile Endpoint
+
+- Go to `backend/base/views/user_views.py` and add the API view as below
+
+```
+...
+@api_view(['PUT'])
+@permission_classes([IsAuthenticated])
+def updateUserProfile(request):
+  user = request.user
+  serializer = UserSerializerWithToken(user, many=False)
+
+  data = request.data
+
+  user.first_name = data['name']
+  user.username = data['email']
+  user.email = data['email']
+
+  if data['password'] != '':
+    user.password = make_password(data['password'])
+
+  user.save()
+
+  return Response(serializer.data)
+  
+...
+```
+
+- Go to `backend/base/urls/user_urls.py`
+
+```
+...
+path('profile/update/', views.updateUserProfile, name="user-profile-update"),
+...
+```
+
+- Go to `backend.serializers.py` and update the `UserSerializerWithToken(UserSerializer)` as below to get an access token
+
+```
+class UserSerializerWithToken(UserSerializer):
+  token = serializers.SerializerMethodField(read_only=True)
+
+  class Meta:
+    model = User
+    fields = ['id', '_id', 'username', 'email', 'name', 'isAdmin', 'token']
+
+  def get_token(self, obj):
+    token = RegreshToken.for_user(obj)
+    return str(token.access_token)
+```
