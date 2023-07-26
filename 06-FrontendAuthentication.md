@@ -644,3 +644,105 @@ class UserSerializerWithToken(UserSerializer):
     token = RegreshToken.for_user(obj)
     return str(token.access_token)
 ```
+
+## Profile Screen & Get User Details
+
+- Go to `frontend/src/constants/userConstants.js` and add the `USER_DETAILS` constants
+
+```
+...
+export const USER_DETAILS_REQUEST = 'USER_DETAILS_REQUEST'
+export const USER_DETAILS_SUCCESS = 'USER_DETAILS_SUCCESS'
+export const USER_DETAILS_FAIL = 'USER_DETAILS_FAIL'
+```
+
+- Go to `reducers/userReducers`
+
+```
+import {
+  ...
+
+  USER_DETAILS_REQUEST,
+  USER_DETAILS_SUCCESS,
+  USER_DETAILS_FAIL,
+} from '../constants/userConstants'
+
+...
+
+export const userDetailsReducer = (state = { user: {} }, action) => {
+  switch (action.type) {
+    case USER_DETAILS_REQUEST:
+      return { ...state, loading: true }
+
+    case USER_DETAILS_SUCCESS:
+      return { loading: false, user: action.payload }
+
+    case USER_DETAILS_FAIL:
+      return { loading: false, error: action.payload }
+
+    default:
+      return state
+  }
+}
+```
+
+- Go to `store.js`
+
+```
+...
+import { userLoginReducer, userRegisterReducer, userDetailsReducer } from './reducers/userReducers.js'
+
+const reducer = combineReducers ({
+  ...
+  userRegister: userRegisterReducer,
+  userDetails: userDetailsReducer,
+})
+```
+
+- Go to `actions/userActions.js`
+
+```
+import axios from 'axios'
+import {
+  ...
+  USER_DETAILS_REQUEST,
+  USER_DETAILS_SUCCESS,
+  USER_DETAILS_FAIL,
+} from '../constants.userConstants'
+
+export const getUserDetails = (id) => async (dispatch, getState) => {
+  try {
+    dispatch({
+      type: USER_DETAILS_REQUEST
+    })
+
+    const {
+      userLogin: {userInfo},
+    } = getState()
+
+    const config = {
+      headers: {
+        'Content-type': 'application/json',
+        Authorization: `Bearer ${userInfo.token}`
+      }
+    }
+
+    const { data } = await axios.get(
+      `/api/users/${id}/`,
+      config
+    )
+
+    dispatch({
+      type: USER_DETAILS_SUCCESS,
+      payload: data
+    })
+  } catch (error) {
+    dispatch({
+      type: USER_REGISTER_FAIL,
+      payload: error.response && error.response.data.detail
+        ? error.response.data.detail
+        : error.message,
+    })
+  }
+}
+```
