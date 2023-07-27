@@ -1,6 +1,7 @@
 # 01 - Starting the Front End
 - `mkdir ecommerce` and `cd ecommerce`
 - `npx create-react-app frontend`
+- If you get a warning about Babel, use `npm install --save-dev @babel/plugin-proposal-private-property-in-object`
 - `cd frontend` when done.
 - `npm start` to test, check running ok and enough space if on Codeanywhere IDE.
 - Change title and favicon to the one in the resources folder.
