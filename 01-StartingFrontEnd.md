@@ -121,7 +121,7 @@ function Header() {
 - Add the fontawesome CDN in `index.html`
 
 ## Home Screen Product Listing
-- Move the `product.js` file from the resources into the `src` directory.
+- Move the `products.js` file from the resources into the `src` directory.
 - Move the `images` folder into the `public` directory.
 - Create a `screens` folder in the `src` directory.
 - Create `HomeScreen.js` and populate as below using `_rfce`...
