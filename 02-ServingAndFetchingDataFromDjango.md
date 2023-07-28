@@ -6,8 +6,8 @@
 - `virtualenv myenv` or `python -m venv myenv`
 - Activate the virtual environment `myenv\scripts\activate` - use `source myenv/bin/activate` from bash
 - `pip list` to view dependencies.
-- Django was running into problems when not specifying a specific version so look up the latest stable release when running the next command.
-- `pip install django==4.1`
+- Django was running into problems when not specifying a specific version so look up the latest stable release when running the next command. 4.0 seems the most reliable version at the time of writing - test the initial migrate before proceeding to be sure if using newer versions.
+- `pip install django==4.0`
 - `django-admin startproject backend`
 - `cd backend`
 - `python manage.py runserver` - add `0.0.0.0:8000` for the codeanywhere IDE
