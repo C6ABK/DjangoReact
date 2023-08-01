@@ -216,7 +216,7 @@ function CartScreen({ match, location, history }){
 
 ```
 ...
-const removeFromCartHandler = (id) -> {
+const removeFromCartHandler = (id) => {
   alert("ID: ", id)
 }
 
