@@ -252,10 +252,10 @@ import {
 ```
 
 - Create a new reducer for product details as below...
-- NOTE: using `...state` in the `productDetailsReducer` seems to make a previously selected product visible for a short time if you go back and select another. Use `product:[]` to behave the same as the `productListReducer`
+- NOTE: using `...state` in the `productDetailReducer` seems to make a previously selected product visible for a short time if you go back and select another. Use `product:[]` to behave the same as the `productListReducer`
 
 ```
-export const productDetailsReducer = (state = { product: {reviews:[]} }, action) => {
+export const productDetailReducer = (state = { product: {reviews:[]} }, action) => {
     switch (action.type) {
         case PRODUCT_DETAILS_REQUEST:
             return { loading: true, ...state }
