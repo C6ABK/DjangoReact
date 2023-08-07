@@ -480,4 +480,4 @@ urlpatterns = [
 ]
 ```
 
-- Delete the FILE `base.urls.py`
+- Delete the FILE `base/urls.py`
