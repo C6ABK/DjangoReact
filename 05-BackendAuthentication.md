@@ -366,7 +366,7 @@ from rest_framework import status
 
 @api_view(['GET'])
 def getProducts(request):
-  product = Product.objects.all()
+  products = Product.objects.all()
   serializer = ProductSerializer(products, many=True)
   return Response(serializer.data)
 
