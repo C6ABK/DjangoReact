@@ -186,8 +186,8 @@ function App(){
     <Header />
     <main className="py-3">
       <Container>
-        <Route path="/" component={HomeScreen} exact />
-        <Route path="/login" component={LoginScreen} />
+        <Route path="/" element={<HomeScreen />} exact />
+        <Route path="/login" element={<LoginScreen />} />
         ...
       </Container>
     </main>
