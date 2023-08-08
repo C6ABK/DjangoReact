@@ -388,6 +388,9 @@ export const userRegisterReducer = (state = {}, action) => {
 
     case USER_LOGOUT:
       return {}
+
+    default:
+      return state
   }
 }
 ```
