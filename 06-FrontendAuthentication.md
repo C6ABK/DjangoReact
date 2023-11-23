@@ -150,7 +150,7 @@ const initialState = {
 ```
 
 ## Login Screen & Functionality
-- Create `screens/LoginScreen.js
+- Create `screens/LoginScreen.js`
 
 ```
 import React, { useState, useEffect } from 'react'
