@@ -294,6 +294,7 @@ path('users/register/', views.registerUser, name='register'),
 ### Django Signals
 - Signals allow certain senders to notify a set of receivers that some action has taken place.
 - We want to use pre_save and post_save here
+- `pip install django-db-signals`
 - Go to `base` and create `signals.py`
 - Go to `base/apps.py` and modify as below
 - Ensure `settings.py` contains `'base.apps.BaseConfig',`
